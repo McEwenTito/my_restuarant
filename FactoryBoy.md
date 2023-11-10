@@ -95,7 +95,7 @@ This will prompt you to enter a username, email address, and password for your s
 And we are done setting up django for our app. Next we will create models for our app.
 
 
-# Creating our apps Models
+## Creating our apps Models
 
 Our restaurant app will have 3 models: Dish, Ingredient and Restaurant. Let's go ahead and edit our restaurant/models.py file as follows:
 
@@ -213,20 +213,20 @@ python manage.py test
 ```
 
 Congratulations! you have passed your first tests
-# Using FactoryBoy and Faker
+## Using FactoryBoy and Faker
 
 Let's face it, writing test scenarios is boring, even borderline unproductive. 
 
 FactoryBoy and Faker are two powerful libraries that remove repeativeness out of tests and improves efficiency. FactoryBoy allows you to define factories for your models, and Faker helps generate realistic-looking fake data.
 
 
-## Install the packages:
+### Install the packages:
 First, you need to install the factory_boy and Faker packages. You can install them using pip:
 ```
 pip install factory-boy faker
 ```
 
-## Create Factories:
+### Create Factories:
 Create factories for your models using Factory Boy. In your Django app directory, create a tests directory if you don't have one, and within that directory, create a file named factories.py. Define factories for your models in this file.
 
 ```python
@@ -258,7 +258,7 @@ class DishFactory(factory.Factory):
     price = fake.random_number(2)
     restaurant = factory.SubFactory(RestaurantFactory)
 ```
-## Use Factories in Tests:
+### Use Factories in Tests:
 Now, we can use these factories in your test cases to create instances of our models with fake data.
 
 ```python
@@ -390,12 +390,12 @@ class RestaurantViewsTest(TestCase):
 
 Repeat a similar structure for Ingredient and Dish views and tests.
 
-## Run the tests:
+### Run the tests:
 
 ```bash
 python manage.py test restaurant.tests
 ```
-# Implementing HTMX for Interactive Testing
+## Implementing HTMX for Interactive Testing
 
 Lets kick things up a notch and add HTMX to our project. HTMX is a library that allows you to add dynamic, AJAX-style behavior to your web pages with minimal JavaScript. To integrate HTMX for dynamic and interactive testing of restaurant-related features in our Django project, we will follow these general steps:
 
