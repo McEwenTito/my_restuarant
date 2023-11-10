@@ -22,61 +22,77 @@ Lets quickly set up our django project. We will create a simple restaurant app.
 
 
 
-1. Install Python
+### 1.1 Install Python
 
 Django requires Python 3.6 or higher. To install Python, you can use the following command:
 
+```
 sudo apt install python3
-2. Install Django
-
-Once you have Python installed, you can install Django using pip:
-
-pip install django
-3. Create a virtual environment
+```
+### 1.2 Create a virtual environment
 
 A virtual environment is a sandboxed Python environment that allows you to install packages without affecting your system-wide Python installation. To create a virtual environment, run the following command:
 
+```
 python3 -m venv myvenv
-4. Activate the virtual environment
+```
+
+### 1.3 Activate the virtual environment
 
 To activate the virtual environment, run the following command:
-
+```
 source myvenv/bin/activate
-5. Create a new Django project
+```
+
+### 1.4 Install Django
+
+Once you have Python installed, you can install Django using pip:
+
+```
+pip install django
+```
+
+### 1.5 Create a new Django project
 
 To create a new Django project, run the following command:
 
-django-admin startproject mysite
+```
+django-admin startproject my_restaurant
+```
+
 This will create a new directory called mysite containing your Django project files.
 
-6. Create a new Django app
+### 1.6 Create a new Django app
 
 To create a new Django app, run the following command:
-
+```
 django-admin startapp myapp
+```
 This will create a new directory called myapp containing your Django app files.
 
-7. Add your app to your project's settings
+### 1.7 Add your app to your project's settings
 
 To add your app to your project's settings, open the settings.py file in your project directory and add your app to the INSTALLED_APPS list.
 
-8. Start the development server
+### 1.8 Start the development server
 
 To start the development server, run the following command:
 
+```
 python manage.py runserver
+```
 This will start the development server at http://localhost:8000/. You can now access your Django project in your web browser.
 
-9. Create a superuser
+### 1.9 Create a superuser
 
 To create a superuser, run the following command:
-
+```
 python manage.py createsuperuser
+```
+
 This will prompt you to enter a username, email address, and password for your superuser account.
 
-10. Start developing!
-
-Now that you have a basic Django project set up, you can start developing your web application!
+And we are done setting up django for our app. Next we will create models for our app.
 
 
 # Creating our apps Models
@@ -370,16 +386,15 @@ class RestaurantViewsTest(TestCase):
         response = self.client.post(reverse('restaurant_delete', args=[restaurant.pk]))
         self.assertEqual(response.status_code, 302)  # Redirect after successful deletion
         self.assertFalse(Restaurant.objects.filter(pk=restaurant.pk).exists())
-#Repeat a similar structure for Ingredient and Dish views and tests.
 ```
+
+Repeat a similar structure for Ingredient and Dish views and tests.
 
 ## Run the tests:
 
 ```bash
 python manage.py test restaurant.tests
 ```
-
-
 # Implementing HTMX for Interactive Testing
 
 Lets kick things up a notch and add HTMX to our project. HTMX is a library that allows you to add dynamic, AJAX-style behavior to your web pages with minimal JavaScript. To integrate HTMX for dynamic and interactive testing of restaurant-related features in our Django project, we will follow these general steps:
