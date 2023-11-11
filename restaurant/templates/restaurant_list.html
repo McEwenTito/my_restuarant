@@ -1,21 +1,22 @@
-<!-- restaurant_list.html -->
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Restaurant List</title>
-</head>
-<body>
+<!-- Example: restaurant_list.html -->
+{% extends 'base.html' %}
+
+{% block content %}
     <h1>Restaurant List</h1>
+    
     <ul>
         {% for restaurant in restaurants %}
-            <li>{{ restaurant.name }} - {{ restaurant.address }} - {{ restaurant.phone_number }}</li>
-            <a href="{% url 'restaurant:restaurant_edit' pk=restaurant.pk %}">Edit</a>
-            <a href="{% url 'restaurant:restaurant_delete' pk=restaurant.pk %}">Delete</a>
-
-            {% endfor %}
+            <li>
+                <span hx-get="{% url 'restaurant:restaurant_edit' pk=restaurant.pk %}" hx-trigger="click">Edit</span>
+                <span hx-get="{% url 'restaurant:restaurant_delete' pk=restaurant.pk %}" hx-trigger="click">Delete</span>
+                {{ restaurant.name }} - {{ restaurant.address }} - {{ restaurant.phone_number }}
+            </li>
+        {% endfor %}
     </ul>
-</body>
-</html>
+
+    <div hx-target="#restaurant-form-container">
+        <a hx-get="{% url 'restaurant:restaurant_create' %}" hx-trigger="click">Add a Restaurant</a>
+    </div>
+
+    <div id="restaurant-form-container"></div>
+{% endblock %}

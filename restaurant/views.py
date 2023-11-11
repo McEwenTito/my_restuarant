@@ -12,14 +12,14 @@ class RestaurantListView(ListView):
 
 class RestaurantCreateView(CreateView):
     model = Restaurant
-    template_name = 'restaurant_form.html'
     form_class = RestaurantForm
+    template_name = 'restaurant_form.html'
     success_url = reverse_lazy('restaurant:restaurant_list')
 
 class RestaurantUpdateView(UpdateView):
     model = Restaurant
     form_class = RestaurantForm
-    template_name = 'restaurant_form.html'
+    template_name = 'restaurant_form_partial.html'
     context_object_name = 'restaurant'
     success_url = reverse_lazy('restaurant:restaurant_list')
 

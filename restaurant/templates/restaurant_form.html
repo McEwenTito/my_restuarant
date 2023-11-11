@@ -1,19 +1,13 @@
-<!-- restaurant_form.html -->
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% if form.instance.pk %}Edit{% else %}Create{% endif %} Restaurant</title>
-</head>
-<body>
-    <h1>{% if form.instance.pk %}Edit{% else %}Create{% endif %} Restaurant</h1>
-    <form method="post" enctype="multipart/form-data">
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>{% if form.instance.pk %}Edit{% else %}Create{% endif %}A Restaurant</h1>
+    {% if form.instance.pk %}<form method="post" action="{% url 'restaurant:restaurant_edit' pk=restaurant.pk %}" hx-include="#restaurant-form-container">
+    {% else%}<form hx-post="{% url 'restaurant:restaurant_create' %}" hx-include="#restaurant-form-container">
+    {% endif %}
         {% csrf_token %}
         {{ form.as_p }}
         <button type="submit">Save</button>
     </form>
 
-</body>
-</html>
+{% endblock %}

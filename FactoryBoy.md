@@ -502,7 +502,7 @@ Now, when you click on "Edit" or "Add a Restaurant," HTMX will dynamically load 
 ### 8. Finally
 You made it! I hope your coffee is not yet cold.
 
-We have r
+
 
 
 
