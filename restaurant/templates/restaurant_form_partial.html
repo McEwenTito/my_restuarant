@@ -1,0 +1,5 @@
+<form method="post" action="{% url 'restaurant:restaurant_edit' pk=restaurant.pk %}" hx-include="#restaurant-form-container">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" hx-trigger="click">Save</button>
+</form>

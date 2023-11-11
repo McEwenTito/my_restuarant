@@ -1,8 +1,8 @@
 # Start Writing Django Tests in 4 Minutes using FactoryBoy (and Faker)
 
-Testing is an important part of django development. It helps to make sure that your code works as expected. 
+Testing is an crucial part of django development. It helps to make sure that your code works as expected. 
 
-Testing is a crucial step in every development process for the following reasons:
+Testing is an important step in every development process for the following reasons:
 
 - It helps prevents bugs. Testing helps you find and fix bugs before they cause problems for your users 
 - It improves the quality if your code. Well-tested code is reliable, efficient, and maintainable.
@@ -60,15 +60,15 @@ To create a new Django project, run the following command:
 django-admin startproject my_restaurant
 ```
 
-This will create a new directory called mysite containing your Django project files.
+This will create a new directory called my_restuarant containing your Django project files.
 
 ### 1.6 Create a new Django app
 
 To create a new Django app, run the following command:
 ```
-django-admin startapp myapp
+django-admin startapp restaurant
 ```
-This will create a new directory called myapp containing your Django app files.
+This will create a new directory called restuarant containing your Django app files.
 
 ### 1.7 Add your app to your project's settings
 
@@ -92,12 +92,14 @@ python manage.py createsuperuser
 
 This will prompt you to enter a username, email address, and password for your superuser account.
 
-And we are done setting up django for our app. Next we will create models for our app.
+And we are done setting up django for our app. Next we will create models. 
 
 
 ## Creating our apps Models
 
 Our restaurant app will have 3 models: Dish, Ingredient and Restaurant. Let's go ahead and edit our restaurant/models.py file as follows:
+
+**restaurant/models.py**
 
 ```python
 class Restaurant(models.Model):
@@ -127,10 +129,17 @@ class Ingredient(models.Model):
         
 ```
 
+Awesome, now lets create and run migrations for our models:
+```
+python manage.py makemigrations
+python manage.py migrate
+```
+
 ## Writing the First Test
 
-Edit the my_restaurant/restaurant/models.py file and add the following lines:
+Create a directory called tests and add an empty __init__.py file. cd into that directory and add a tests.py file.
 
+**restaurant/tests/tests.py**
 ```python
 from django.test import TestCase
 from .models import Restaurant, Ingredient, Dish
@@ -212,7 +221,8 @@ We can now run our first test screnarios for our new models with the command:
 python manage.py test
 ```
 
-Congratulations! you have passed your first tests
+Congratulations! you have passed your first tests.
+
 ## Using FactoryBoy and Faker
 
 Let's face it, writing test scenarios is boring, even borderline unproductive. 
@@ -221,7 +231,7 @@ FactoryBoy and Faker are two powerful libraries that remove repeativeness out of
 
 
 ### Install the packages:
-First, you need to install the factory_boy and Faker packages. You can install them using pip:
+First, you need to install the factory_boy and faker packages. You can install them using pip:
 ```
 pip install factory-boy faker
 ```
@@ -229,6 +239,7 @@ pip install factory-boy faker
 ### Create Factories:
 Create factories for your models using Factory Boy. In your Django app directory, create a tests directory if you don't have one, and within that directory, create a file named factories.py. Define factories for your models in this file.
 
+**restaurant/tests/factories.py**
 ```python
 import factory
 from faker import Faker
@@ -261,6 +272,7 @@ class DishFactory(factory.Factory):
 ### Use Factories in Tests:
 Now, we can use these factories in your test cases to create instances of our models with fake data.
 
+**restaurant/tests/test_models.py**
 ```python
 from django.test import TestCase
 from .models import Restaurant, Ingredient, Dish
@@ -294,12 +306,12 @@ class DishModelTests(TestCase):
     # ... Other test methods ...
 
 ```
+Go ahead and run the tests again.
 
 ## Testing Views
-First we need to create our views. We'll create basic views for listing, creating, updating, and deleting instances of the Restaurant, Ingredient, and Dish.
+Let's move on to views. We'll create basic views for listing, creating, updating, and deleting instances of the Restaurant, Ingredient, and Dish.
 
-views.py:
-
+**restaurant/testsviews.py**
 ```python
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
@@ -327,10 +339,11 @@ class RestaurantDeleteView(DeleteView):
     model = Restaurant
     template_name = 'restaurant_confirm_delete.html'
     success_url = reverse_lazy('restaurant_list')
-#Similar views can be created for Ingredient and Dish.
 ```
+#Similar views can be created for Ingredient and Dish.
 
-urls.py:
+
+**restaurant/urls.py:**
 ```python
 from django.urls import path
 from .views import RestaurantListView, RestaurantCreateView, RestaurantUpdateView, RestaurantDeleteView
@@ -343,7 +356,7 @@ urlpatterns = [
 ]
 ```
 
-tests.py:
+**restaurant/tests.py:**
 ```python
 from django.test import TestCase
 from django.urls import reverse
@@ -398,4 +411,98 @@ python manage.py test restaurant.tests
 ## Implementing HTMX for Interactive Testing
 
 Lets kick things up a notch and add HTMX to our project. HTMX is a library that allows you to add dynamic, AJAX-style behavior to your web pages with minimal JavaScript. To integrate HTMX for dynamic and interactive testing of restaurant-related features in our Django project, we will follow these general steps:
+
+### 1. Install HTMX:
+Install HTMX using a package manager, such as pip:
+
+```bash
+pip install htmx
+```
+
+### 2. Include HTMX in Your Template:
+Include the HTMX library in the <head> section of your base HTML template. You can use the CDN or include the library locally.
+
+```html
+<!-- Include HTMX from CDN -->
+<script src="https://unpkg.com/htmx.org@latest/dist/htmx.min.js"></script>
+```
+
+### 3. Update Your Views and Templates:
+Modify your Django views and templates to use HTMX attributes for dynamic behavior. For example, you can use the hx-get attribute to load content dynamically.
+
+```html
+<!-- Example: restaurant_list.html -->
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>Restaurant List</h1>
+    
+    <ul>
+        {% for restaurant in restaurants %}
+            <li>
+                <span hx-get="{% url 'restaurant:restaurant_edit' pk=restaurant.pk %}" hx-trigger="click">Edit</span>
+                <span hx-get="{% url 'restaurant:restaurant_delete' pk=restaurant.pk %}" hx-trigger="click">Delete</span>
+                {{ restaurant.name }} - {{ restaurant.address }} - {{ restaurant.phone_number }}
+            </li>
+        {% endfor %}
+    </ul>
+
+    <div hx-target="#restaurant-form-container">
+        <a href="{% url 'restaurant:restaurant_create' %}" hx-trigger="click">Add a Restaurant</a>
+    </div>
+
+    <div id="restaurant-form-container"></div>
+{% endblock %}
+```
+
+### 4. Update Your Views to Return Partial HTML:
+In your Django views, you might need to modify them to return partial HTML when requested by HTMX.
+
+```python
+
+# Example: views.py
+
+def restaurant_edit(request, pk):
+    restaurant = get_object_or_404(Restaurant, pk=pk)
+    form = RestaurantForm(instance=restaurant)
+    return render(request, 'restaurant_form_partial.html', {'form': form, 'restaurant': restaurant})
+
+
+```
+### 5. Create Partial Templates:
+
+Create partial templates for the parts of the page you want to load dynamically. For example, you can create a restaurant_form_partial.html template.
+
+```html
+<!-- Example: restaurant_form_partial.html -->
+<form method="post" action="{% url 'restaurant:restaurant_edit' pk=restaurant.pk %}" hx-include="#restaurant-form-container">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" hx-trigger="click">Save</button>
+</form>
+```
+
+### 6. Add HTMX Attributes to Your Forms:
+In your forms, you can add HTMX attributes for dynamic behavior.
+
+```html
+
+<!-- Example: restaurant_form.html -->
+<form method="post" action="{% url 'restaurant:restaurant_edit' pk=restaurant.pk %}" hx-include="#restaurant-form-container">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" hx-trigger="click">Save</button>
+</form>
+```
+
+### 7. Test Your Interactive Features:
+Now, when you click on "Edit" or "Add a Restaurant," HTMX will dynamically load the form without a full page reload. Make sure to test these features interactively to ensure everything works as expected.
+
+
+### 8. Finally
+You made it! I hope your coffee is not yet cold.
+
+We have r
+
+
 
