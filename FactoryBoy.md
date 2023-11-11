@@ -356,7 +356,7 @@ urlpatterns = [
 ]
 ```
 
-### 5.3 Create out html files
+### 5.3 Create our html files
 
 **restaurant/templates/restaurant_list.html:**
 ```html
