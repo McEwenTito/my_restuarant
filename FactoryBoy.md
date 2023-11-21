@@ -1,24 +1,24 @@
 # Start Writing Django Tests in 4 Minutes using FactoryBoy (and Faker)
 
-Testing is an crucial part of django development. It helps to make sure that your code works as expected. 
+Testing is a crucial part of Django development. It helps to make sure that your code works as expected. 
 
 Testing is an important step in every development process for the following reasons:
 
-- **It helps prevents bugs**. Testing helps you find and fix bugs before they cause problems for your users 
-- **It improves the quality if your code**. Well-tested code is reliable, efficient, and maintainable.
-- **It gives you confidence in your code**. When you write tests for your code, you can make changes to your code without breking the entire application.
+- **It helps prevent bugs**. Testing helps you find and fix bugs before they cause problems for your users 
+- **It improves the quality of your code**. Well-tested code is reliable, efficient, and maintainable.
+- **It gives you confidence in your code**. When you write tests for your code, you can make changes to your code without breaking the entire application.
 
 
 There are two main types of testing: **Integration testing** and **Unit testing.**
 
 
-This guide will show you how to write unit tests in django using **FactoryBoy** and **Faker**. FactoryBoy and Faker are awesome Python libraries for testing. Using them will help you create complihensive, realistic and reusable tests.
+This guide will show you how to write unit tests in Django using **FactoryBoy** and **Faker**. FactoryBoy and Faker are awesome Python libraries for testing. Using them will help you create comprehensive, realistic, and reusable tests.
 
 I will make this guide short and to the point. You should be able to finish it before your coffee runs cold.
 
 ## 1.0 Setting Up Your Django Project
 
-Lets quickly set up our django project. We will create a simple restaurant app. 
+Let's quickly set up our Django project. We will create a simple restaurant app. 
 
 
 
@@ -68,7 +68,7 @@ To create a new Django app, run the following command:
 ```
 django-admin startapp restaurant
 ```
-This will create a new directory called restuarant containing your Django app files.
+This will create a new directory called restaurant containing your Django app files.
 
 ### 1.7 Add your app to your project's settings
 
@@ -90,14 +90,14 @@ To create a superuser, run the following command:
 python manage.py createsuperuser
 ```
 
-This will prompt you to enter a username, email address, and password for your superuser account.
+This will prompt you to enter your superuser account's username, email address, and password.
 
-And we are done setting up django for our app. Next we will create models. 
+And we are done setting up Django for our app. Next, we will create models. 
 
 
-## 2. Creating our apps Models
+## 2. Creating our app Models
 
-Our restaurant app will have 3 models: Dish, Ingredient and Restaurant. Let's go ahead and edit our restaurant/models.py file as follows:
+Our restaurant app will have 3 models: Dish, Ingredient, and Restaurant. Let's go ahead and edit our restaurant/models.py file as follows:
 
 **restaurant/models.py**
 
@@ -215,19 +215,19 @@ class DishModelTests(TestCase):
 
 ```
 
-We can now run our first test screnarios for our new models with the command:
+We can now run our first test scenarios for our new models with the command:
 
 ```
 python manage.py test restaurant.tests
 ```
 
-Congratulations! you have passed your first tests.
+Congratulations! You have passed your first tests.
 
 ## 4. Using FactoryBoy and Faker
 
 Let's face it, writing test scenarios is boring, even borderline unproductive. 
 
-FactoryBoy and Faker are two powerful libraries that remove repeativeness out of tests and improves efficiency. FactoryBoy allows you to define factories for your models, and Faker helps generate realistic-looking fake data.
+FactoryBoy and Faker are powerful libraries that remove repetitiveness from tests and improve efficiency. FactoryBoy allows you to define factories for your models, and Faker helps generate realistic-looking fake data.
 
 
 ### 4.1 Install the packages:
@@ -270,7 +270,7 @@ class DishFactory(factory.Factory):
     restaurant = factory.SubFactory(RestaurantFactory)
 ```
 ### 4.3 Use Factories in Tests:
-Now, we can use these factories in your test cases to create instances of our models with fake data.
+Now, we can use these factories in our test cases to create instances of our models with fake data.
 
 **restaurant/tests/test_models.py**
 ```python
@@ -473,7 +473,7 @@ python manage.py test restaurant.tests
 ```
 ## 6. Implementing HTMX for Interactive Testing
 
-Lets kick things up a notch and add HTMX to our project. HTMX is a library that allows you to add dynamic, AJAX-style behavior to your web pages with minimal JavaScript. To integrate HTMX for dynamic and interactive testing of restaurant-related features in our Django project, we will follow these general steps:
+Let's kick things up a notch and add HTMX to our project. HTMX is a library that allows you to add dynamic, AJAX-style behavior to your web pages with minimal JavaScript. To integrate HTMX for dynamic and interactive testing of restaurant-related features in our Django project, we will follow these general steps:
 
 ### 6.1. Install HTMX:
 Install HTMX using a package manager, such as pip:
